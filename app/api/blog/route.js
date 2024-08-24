@@ -3,17 +3,23 @@ import { writeFile } from "fs/promises";
 import BlogModel from "@/lib/models/BlogModel";
 import { NextResponse } from "next/server";
 
-const loadDB = async () => {
+const LoadDB = async () => {
   await connectDB();
 };
-loadDB();
+LoadDB();
 
+// Api endPoint to get aLL BLOGS
 export async function GET(req) {
-  console.log("blog get Hit");
-
-  return NextResponse.json({ msg: "Api Working" });
+  const blogId = req.nextUrl.searchParams.get("id");
+  if (blogId) {
+    const blog = await BlogModel.findById(blogId);
+    return NextResponse.json({ blog });
+  } else {
+    const blogs = await BlogModel.find({});
+    return NextResponse.json({ blogs });
+  }
 }
-
+// Createing api for uploading blogs
 export async function POST(req) {
   console.log("blog post request");
   const formData = await req.formData();
@@ -25,12 +31,12 @@ export async function POST(req) {
   await writeFile(path, buffer);
   const imgUrl = `/${timeStamp}_${image.name}`;
   const blogData = {
-    title: `${formData.get("title")}`,
-    description: `${formData.get("description")}`,
-    category: `${formData.get("category")}`,
-    author: `${formData.get("author")}`,
-    authorImg: `${formData.get("authorImg")}`,
-    image: `${imgUrl}`,
+    title: formData.get("title"),
+    description: formData.get("description"),
+    category: formData.get("category"),
+    author: formData.get("author"),
+    authorImg: formData.get("authorImg"),
+    image: imgUrl,
   };
   await BlogModel.create(blogData);
   console.log("Blog post created");
