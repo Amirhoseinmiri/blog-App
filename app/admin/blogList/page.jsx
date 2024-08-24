@@ -1,6 +1,30 @@
 "use client";
 
+import BlogTableItem from "@/components/adminComponents/BlogTableItem";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 const BlogList = () => {
+  const [blogs, setBlogs] = useState([]);
+  const fetchBlogs = async () => {
+    const res = await axios.get("/api/blog");
+    setBlogs(res.data.blogs);
+  };
+
+  const deleteBlogs = async (id) => {
+    const res = await axios.delete("/api/blog", {
+      params: {
+        id,
+      },
+    });
+    toast.success(res.data.msg);
+    fetchBlogs();
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
   return (
     <div className="flex-1 pt-5 sm:pt-12 sm:pl-16">
       <h1>All blogs</h1>
@@ -22,7 +46,19 @@ const BlogList = () => {
               </th>
             </tr>
           </thead>
-          <tbody className=""></tbody>
+          <tbody>
+            {blogs.map((item, index) => (
+              <BlogTableItem
+                key={index}
+                author={item.author}
+                authorImg={item.authorImg}
+                title={item.title}
+                handleDelete={deleteBlogs}
+                id={item._id}
+                date={item.date}
+              />
+            ))}
+          </tbody>
         </table>
       </div>
     </div>

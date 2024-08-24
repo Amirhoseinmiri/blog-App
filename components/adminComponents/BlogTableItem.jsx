@@ -1,7 +1,16 @@
+"use client";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 
-const BlogTableItem = ({ authorImg }) => {
+const BlogTableItem = ({
+  authorImg,
+  title,
+  author,
+  date,
+  handleDelete,
+  id,
+}) => {
+  const blogDate = new Date(date);
   return (
     <tr className="bg-white border-b">
       <th
@@ -10,10 +19,22 @@ const BlogTableItem = ({ authorImg }) => {
       >
         <Image
           src={authorImg ? authorImg : assets.profile_icon}
+          width={40}
+          height={40}
           alt="author Image"
         />
+        <p>{author ? author : "no author"}</p>
       </th>
-      <td className=""></td>
+      <td className="px-6 py-4">{title ? title : "no title"}</td>
+      <td className="px-6 py-4">{blogDate.toDateString()}</td>
+      <td className="px-6 py-4 cursor-pointer" onClick={() => handleDelete(id)}>
+        <Image
+          src={assets.delteIcon}
+          alt="delete icon"
+          width={25}
+          height={25}
+        />
+      </td>
     </tr>
   );
 };
