@@ -20,7 +20,7 @@ export async function GET(req) {
     return NextResponse.json({ blogs });
   }
 }
-// Createing api for uploading blogs
+// Creating api for uploading blogs
 export async function POST(req) {
   console.log("blog post request");
   const formData = await req.formData();

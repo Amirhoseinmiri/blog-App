@@ -64,9 +64,13 @@ const BlogPage = () => {
           height={720}
           width={1280}
         />
-        <h1 className="my-8 text-[26px] font-semibold">Introduction:</h1>
-        <p>{blogData.description}</p>
-        <h3 className="my-5 text-xl font-semibold">
+        {/* <h1 className="my-8 text-[26px] font-semibold">Introduction:</h1> */}
+        {/* <p>{blogData.description}</p> */}
+        <div
+          className="blog-content"
+          dangerouslySetInnerHTML={{ __html: blogData.description }}
+        ></div>
+        {/* <h3 className="my-5 text-xl font-semibold">
           Step 1: Self-Reflection and Goal Seting
         </h3>
         <p className="my-3">
@@ -117,7 +121,7 @@ const BlogPage = () => {
           voluptatum maiores vitae suscipit mollitia expedita deserunt iste
           dolor ipsam sunt, sint magnam, ab tempora necessitatibus officiis illo
           provident!
-        </p>
+        </p> */}
         <div className="my-24">
           <p className="text-black font-semibold my-4">
             Share this Article on social Media

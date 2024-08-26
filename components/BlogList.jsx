@@ -45,7 +45,7 @@ const BlogList = () => {
           Startup
         </button>
         <button
-          onClick={() => setBlogs("Lifestyle")}
+          onClick={() => setBlogs("LifeStyle")}
           className={
             blogs === "LifeStyle"
               ? "bg-black text-white py-1 px-4 rounded-sm"
